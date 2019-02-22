@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta content="telephone=no" name="format-detection" />
+		<meta content="yes" name="apple-mobile-web-app-capable" />
+		<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+		<title>art-template</title>
+		<script src="js/moban.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery-3.min.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="Map"></div>
+		<button type="button" class="toggLe">测试数据渲染</button>
+
+		<p>
+			<input type="text" name="" id="inputModel" placeholder="测试双向绑定" value="" />
+			<br>
+			<label class="modelShow"></label>
+		</p>
+
+	</body>
+	<script id="Html" type="text/text/html">
+		{{name}}
+	</script>
+	<script type="text/javascript">
+		function object() {
+			this.data = {
+				name: '我是数据1'
+			}
+			this.onLoad = function() {
+				this.start()
+				this.clickAll()
+			}
+			this.start = function() {
+				$('#Map').html(template('Html', this.data))
+			}
+			this.clickAll = function() {
+				var that = this;
+				$("#inputModel").bind("input propertychange", function(event) {
+					$('.modelShow').html($(this).val())
+				})
+
+				$('.toggLe').click(function() {
+					that.toggle()
+				})
+			}
+			this.toggle = function() {
+				this.data.name = '我是数据2';
+				this.start()
+			}
+		}
+		new object().onLoad();
+	</script>
+</html>

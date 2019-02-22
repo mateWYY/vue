@@ -1,0 +1,80 @@
+一、移动端
+	1、移动端头部<meta>标签配置与详解
+		(1). 设置浏览器的兼容模式（让IE使用最新的浏览器渲染）
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		
+		(2). 视口
+		[
+			*. 作用：在移动浏览器中，当页面宽度超出设备，浏览器内部虚拟的一个页面容器，将页面容器缩放到设备那么大展示；
+			*. 视口的宽度可以通过meta标签设置；
+			*. 此属性为移动端页面视口设置；
+			*. width：视口的宽度，width=device-width：宽度是设备的宽度
+			*. initial-scale：初始化缩放，- initial-scale=1.0：不缩放
+			*. user-scalable：是否允许用户自行缩放，取值0或1，yes或no
+			*. minimum-scale：最小缩放
+			*. maximum-scale：最大缩放
+			*. 一般设置了不允许缩放，就没必要设置最大最小缩放了。
+		]
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		
+		(3). Cache-Control头域
+		[
+			*. Cache-Control指定请求和响应遵循的缓存机制。在请求消息或响应消息中设置Cache-Control并不会修改另一个消息处理过程中的缓存处理过程。请求时的缓存指令包括no-cache、no-store、max-age、max-stale、min-fresh、only-if-cached，响应消息中的指令包括public、private、no-cache、no-store、no-transform、must-revalidate、proxy-revalidate、max-age。各个消息中的指令含义如下;
+			*. no-cache指示请求或响应消息不能缓存
+			*. no-store用于防止重要的信息被无意的发布。在请求消息中发送将使得请求和响应消息都不使用缓存
+			*. must-revalidate：告诉浏览器、缓存服务器，本地副本过期前，可以使用本地副本；本地副本一旦过期，必须去源服务器进行有效性校验。
+		]
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		
+		(4). 是用于设定禁止浏览器从本地机的缓存中调阅页面内容，设定后一旦离开网页就无法从Cache中再调出
+		<meta http-equiv="Pragma" content="no-cache" />
+		
+		(5). 禁止将页面中的一连串数字识别为电话号码、并设置为手机可以拨打的一个连接。{这个标签的默认值是telephone=yes}
+		<meta content="telephone=no" name="format-detection" />
+		
+		(6). 删除默认的苹果工具栏和菜单栏 {当我们需要显示工具栏和菜单栏时，这个行meta就不用加了，默认就是显示。}
+		<meta content="yes" name="apple-mobile-web-app-capable" />
+		
+		(7).控制状态栏显示样式{content设置状态栏颜色}
+		<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+	
+二、art-template使用详解(配合jquery使用)
+	1. 引入template.js文件.
+		<script src="moban.min.js" type="text/javascript" charset="utf-8"></script>
+		
+	2. 定义html容器与Script容器
+		<div id="Map"></div>
+		<script id="Html" type="text/text/html">
+			{{name}}
+		</script>
+		
+	3. 配置模块，传递数据
+		/* template传入参数{script模块索引，传递使用的数组} */
+		<script type="text/javascript">
+			window.onload = function() {
+				var data = {
+					name: '莉莉'
+				}
+				
+				static()
+				function static() {
+					$('#Map').html(template('Html', data))
+				}
+			}
+		</script>
+		
+三、script面向对象写法(模仿小程序)
+1. 先创建顶部父函数,并声明。
+	function object(){
+		this.data = {
+			name: '数据'
+		}
+		this.onLoad = function(){
+			console.log(this.data.name)
+			this.strat()
+		}
+		this.strat = function(){
+			console.log('我是调用的函数')
+		}
+	}
+	new object().onLoad()
